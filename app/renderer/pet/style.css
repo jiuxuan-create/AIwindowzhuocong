@@ -1,0 +1,284 @@
+/* 桌宠窗口：整体透明，只有角色与交互控件可见 */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+body {
+  position: relative;
+}
+
+/* ---------- 舞台 ---------- */
+.stage {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+/* ---------- 气泡 ---------- */
+.bubble {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 8px;
+  max-height: 122px;
+  padding: 9px 12px 10px;
+  border-radius: 14px;
+  background: rgba(22, 24, 36, 0.86);
+  color: #f2f4fb;
+  font-size: 13px;
+  line-height: 1.6;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(9px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  overflow: hidden auto;
+  scrollbar-width: none;
+  z-index: 30;
+  animation: bubbleIn 0.18s ease-out;
+  word-break: break-word;
+}
+
+.bubble::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.bubble[hidden] {
+  display: none;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  background: rgba(22, 24, 36, 0.86);
+  border-right: 1px solid rgba(255, 255, 255, 0.11);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+  transform: rotate(45deg);
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.bubble-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.bubble-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #9fd0ff;
+  letter-spacing: 0.4px;
+}
+
+.bubble-tag {
+  font-size: 10px;
+  color: #8b93a8;
+}
+
+.bubble-text {
+  white-space: pre-wrap;
+}
+
+/* ---------- 输入条 ---------- */
+.composer {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 6px 6px 12px;
+  border-radius: 999px;
+  background: rgba(20, 22, 32, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  z-index: 40;
+}
+
+.composer[hidden] {
+  display: none;
+}
+
+.composer input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #eef1f8;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 6px 0;
+}
+
+.composer input::placeholder {
+  color: #6f7891;
+}
+
+.icon-btn {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.09);
+  color: #d7dced;
+  font-size: 13px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background 0.14s, transform 0.1s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+.icon-btn.on {
+  background: #3f7ddb;
+  color: #fff;
+}
+
+.icon-btn.busy {
+  background: #b6553f;
+  color: #fff;
+}
+
+/* ---------- 状态角标 ---------- */
+.status {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(20, 22, 32, 0.8);
+  color: #c8cee0;
+  font-size: 11px;
+  z-index: 35;
+}
+
+.status[hidden] {
+  display: none;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6f7891;
+}
+
+.dot.listen {
+  background: #3ecf8e;
+  box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.6);
+  animation: pulse 1.6s infinite;
+}
+
+.dot.busy {
+  background: #f0b429;
+}
+
+.dot.err {
+  background: #e5484d;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(62, 207, 142, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(62, 207, 142, 0);
+  }
+}
+
+/* ---------- 底部提示 ---------- */
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 46px;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(20, 22, 32, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e6e9f2;
+  font-size: 12px;
+  max-width: 88%;
+  text-align: center;
+  z-index: 45;
+}
+
+.hint[hidden] {
+  display: none;
+}
+
+.hint.warn {
+  border-color: rgba(240, 180, 41, 0.5);
+  color: #ffd98a;
+}
+
+/* 摄像头预览：默认不显示，只在排障时加 .show */
+.camera-video {
+  position: absolute;
+  right: 8px;
+  bottom: 60px;
+  width: 96px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.camera-video.show {
+  opacity: 1;
+}

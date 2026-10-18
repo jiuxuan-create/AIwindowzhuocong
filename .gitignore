@@ -1,0 +1,20 @@
+# 依赖
+node_modules/
+
+# 打包产物（安装包走 Release 附件发布）
+dist/
+
+# 运行时数据：个人记忆、对话、情绪日志、截图，以及下载的语音模型与二进制
+runtime/
+
+# 日志与下载临时文件
+*.log
+*.tmp
+*.part
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

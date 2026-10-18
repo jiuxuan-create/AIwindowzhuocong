@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      说明：pixi.js 6 用 new Function 生成着色器同步代码，必须放开 'unsafe-eval'。
+      其余一律收紧：脚本只能来自本协议、blob 与 wasm，不允许任何远程来源。
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; font-src 'self' data:; base-uri 'none'; form-action 'none'"
+    />
+    <link rel="icon" href="data:," />
+    <title>桌宠</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- 对话气泡 -->
+    <div id="bubble" class="bubble" hidden>
+      <div class="bubble-head">
+        <span class="bubble-name" id="bubbleName">小满</span>
+        <span class="bubble-tag" id="bubbleTag"></span>
+      </div>
+      <div class="bubble-text" id="bubbleText"></div>
+    </div>
+
+    <!-- Live2D 舞台 -->
+    <div id="stage" class="stage"></div>
+
+    <!-- 输入条 -->
+    <div id="composer" class="composer" hidden>
+      <input id="input" type="text" placeholder="和我说点什么…" autocomplete="off" spellcheck="false" />
+      <button id="sendBtn" class="icon-btn" title="发送（Enter）">↵</button>
+      <button id="micBtn" class="icon-btn" title="语音对话开关">🎙</button>
+      <button id="consoleBtn" class="icon-btn" title="打开管理页">⚙</button>
+    </div>
+
+    <!-- 状态角标 -->
+    <div id="status" class="status" hidden>
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText"></span>
+    </div>
+
+    <!-- 提示 -->
+    <div id="hint" class="hint" hidden></div>
+
+    <!-- 依赖顺序不能变：Cubism Core → pixi.js → pixi-live2d-display -->
+    <script src="./vendor/live2dcubismcore.min.js"></script>
+    <script src="./vendor/pixi.min.js"></script>
+    <script src="./vendor/pixi-live2d-display.min.js"></script>
+    <script type="module" src="./pet.js"></script>
+  </body>
+</html>

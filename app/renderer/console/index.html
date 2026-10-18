@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <link rel="icon" href="data:," />
+    <title>小满桌宠 · 管理台</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <aside class="side">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <div>
+          <b>小满桌宠</b>
+          <span class="brand-sub" id="brandSub">管理台</span>
+        </div>
+      </div>
+
+      <nav id="nav" class="nav"></nav>
+
+      <div class="side-foot">
+        <div class="statusline" id="statusline">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">连接中…</span>
+        </div>
+        <button class="btn ghost sm" id="btnToPet">把桌宠叫到前面</button>
+      </div>
+    </aside>
+
+    <main id="main" class="main"></main>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

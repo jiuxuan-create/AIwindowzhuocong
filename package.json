@@ -1,0 +1,74 @@
+{
+  "name": "xiaoman-pet",
+  "productName": "小满桌宠",
+  "version": "1.0.0",
+  "description": "会聊天、记得相处、也有表情与情绪的 Live2D 情感桌宠（Windows 桌面版）",
+  "main": "app/main/main.js",
+  "author": "小满桌宠 <xiaoman-pet@example.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "setup": "node --use-system-ca scripts/prepare-vendor.mjs && node --use-system-ca scripts/fetch-live2d.mjs",
+    "vendor": "node --use-system-ca scripts/prepare-vendor.mjs",
+    "fetch:live2d": "node --use-system-ca scripts/fetch-live2d.mjs",
+    "fetch:runtime": "node --use-system-ca scripts/fetch-runtime.mjs",
+    "pack": "node --use-system-ca scripts/prepare-vendor.mjs && electron-builder --win --dir",
+    "dist": "node --use-system-ca scripts/prepare-vendor.mjs && electron-builder --win",
+    "clean": "node scripts/clean.mjs"
+  },
+  "devDependencies": {
+    "@mediapipe/tasks-vision": "1.1.1",
+    "electron": "^38.0.0",
+    "electron-builder": "^26.15.3",
+    "pixi-live2d-display": "0.4.0",
+    "pixi.js": "6.5.10"
+  },
+  "build": {
+    "appId": "com.xiaoman.pet",
+    "productName": "小满桌宠",
+    "copyright": "Copyright © 2026 小满桌宠",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "asar": false,
+    "files": [
+      "app/**/*",
+      "package.json",
+      "README.md",
+      "!**/*.map",
+      "!**/{.DS_Store,Thumbs.db,*.log}"
+    ],
+    "extraResources": [
+      {
+        "from": "docs",
+        "to": "docs",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "artifactName": "xiaoman-pet-${version}-${arch}-${target}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "小满桌宠",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "xiaoman-pet-${version}-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "xiaoman-pet-${version}-portable.${ext}"
+    }
+  }
+}
